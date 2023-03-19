@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>게시글 리스트 페이지</title>
+</head>
+
+<style>
+  .layout {
+    width : 500px;
+    margin : 0 auto;
+    margin-top : 40px;
+  }
+</style>
+
+<body>
+  <div class="layout">
+    <table>
+      <thead>
+        <tr>
+          <th>글 번호</th>
+          <th>제목</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr th:each="board : ${list}">
+          <!--th:each = 반복문, board 변수에 반복되고있는 번호가 담기게 됨. -->
+          <td th:text="${board.id}">1</td>
+          <td>
+            <a th:text="${board.title}" th:href="@{/board/view(id=${board.id})}"></a>
+            <!--localhost:8080/board/view?id=board.id 1~124번까지  (쿼리방식 = ? 붙는)-->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+<!--굳이 태그로 감쌀 필요가 없는 부분을 타임리프 문법을 이용해서 사용할 때-->
+    <th:block th:each="page : ${#numbers.sequence(startPage,endPage)}">
+      <a th:if="${page != nowPage}" th:href="@{/board/list(page = ${page-1}, searchKeyword = ${param.searchKeyword})}" th:text="${page}"></a>
+      <!--param이 쿼리 스트링중에 특정 키워드를 가지고온 값을 넘겨줌.-->
+      <strong th:if="${page == nowPage}" th:text="${page}" style="color : red"></strong>
+    </th:block>
+    <form th:action="@{/board/list}" method="get">
+      <input type="text" name="searchKeyword">
+      <button type="submit">검색</button>
+    </form>
+  </div>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<script th:inline="javascript">
+<!--컨트롤러에서 여기로 메시지 전 달-->
+  /*<!{CDATA{*/
+
+  var message = [[${message}]];
+  alert(message);
+<!--받아온 메시지를 담고 띄워줌-->
+
+  location.replace([[${searchUrl}]]);
+<!--페이지를 이동시켜줌. searchUrl이 경로-->
+
+  /*]]>*/
+</script>
+
+
+<body>
+
+</body>
+</html>
